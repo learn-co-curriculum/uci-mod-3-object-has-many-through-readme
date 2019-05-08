@@ -1,16 +1,15 @@
 # Ruby Object Relations: Has-Many Through
 
-## Objectives
+## Learning Goals
 
 * Understand Has-Many-Through relationships
-* Construct indirect relationships between models (Customers, Waiters and Meals)
+* Construct indirect relationships between models (Customers, Waiters, and Meals)
 * Explore the concept of a 'joining' model
 * Continue to write code using a Single Source of Truth
 
-
 ## Introduction
 
-We've seen how objects can be related to one another directly when one object contains a reference to another. This is the "has many"/"belongs to" association, and is a direct relationship. For example, an artist may have many songs or a book might have many reviews.
+We've seen how objects can be related to one another directly when one object contains a reference to another. This is the "has many"/"belongs to" association and is a direct relationship. For example, an artist may have many songs or a book might have many reviews.
 
 In addition to these one-to-one and one-to-many relationships, there are relationships that need something to join them together. For example, you don't need to have a direct relationship with the pilot of a flight you're on. You have a relationship with that flight (you're taking the flight after all), and the pilot has a relationship with the flight (they're flying it). So you have a relationship to that pilot _through_ the flight.
 
@@ -22,12 +21,12 @@ Check out some more examples:
 * A user on a popular media sharing site can have many "likes", that occur _through_ the pictures they post
 * A Lyft driver that you are connected to _through_ the rides you've taken with them
 
-In this lesson, we'll build out just such a relationship using waiters, customers, and meals. A customer has many meals, and a customer has many waiters through those meals. Similarly, a waiter has many meals, and has many customers through meals.
+In this lesson, we'll build out just such a relationship using waiters, customers, and meals. A customer has many meals, and a customer has many waiters through those meals. Similarly, a waiter has many meals and has many customers through meals.
 
 
 ## Building out our Classes
 
-Let's start by building out the `Customer` class and `Waiter` class.  We want to make sure, when building out classes, that there's something to store each instance.  That is to say: the `Customer` class should know about every `customer` instance that gets created.
+Let's start by building out the `Customer` class and the `Waiter` class.  We want to make sure when building out classes, that there's something to store each instance.  That is to say: the `Customer` class should know about every `customer` instance that gets created.
 
 ```ruby
 class Customer
@@ -82,7 +81,7 @@ That's the essence of the `has many through` relationship.
 
 ## How Does That Work in Code?
 
-Great question! The way we're going to structure this relationship is by setting up our `Meal` class as a 'joining' model between our `Waiter` and our `Customer` classes. And because we're obeying the `single source of truth`, we're going to tell the `Meal` class to know all the details of each `meal` instance. That includes not only the total cost and the tip (which defaults to 0), but also who the `customer` and `waiter` were for each meal.
+Great question! The way we're going to structure this relationship is by setting up our `Meal` class as a 'joining' model between our `Waiter` and our `Customer` classes. And because we're obeying the `single source of truth`, we're going to tell the `Meal` class to know all the details of each `meal` instance. That includes not only the total cost and the tip (which defaults to 0) but also who the `customer` and `waiter` were for each meal.
 
 ```ruby
 class Meal
@@ -109,7 +108,7 @@ That looks great! And even better, it's going to give both the `customer` and `w
 
 ## Building on the relationship
 
-If you take a look at our `customer` right now, they aren't capable of doing much. Let's change that and give them the ability to create a `meal`. To do this, they'll need to take in an instance of a `waiter` and supply the `total` and `tip`, which we'll have default to 0 here as well.
+If you take a look at our `customer` right now, they aren't capable of doing much. Let's change that and give them the ability to create a `meal`. To do this, they'll need to take in an instance of a `waiter` and supply the `total` and `tip`, which we'll have defaulted to 0 here as well.
 
 ```ruby
   def new_meal(waiter, total, tip=0)
@@ -117,7 +116,7 @@ If you take a look at our `customer` right now, they aren't capable of doing muc
   end
 ```
 
-As you can see, we don't need to take `customer` in as an argument, because we're passing in `self` as reference to the current instance of customer. This method will allow us to create new meals as a `customer`, and automatically associate each new `meal` with the `customer` that created it. We can do the same thing for the `Waiter` class:
+As you can see, we don't need to take `customer` in as an argument, because we're passing in `self` as a reference to the current instance of customer. This method will allow us to create new meals as a `customer`, and automatically associate each new `meal` with the `customer` that created it. We can do the same thing for the `Waiter` class:
 
 ```ruby
   def new_meal(customer, total, tip=0)
@@ -231,7 +230,3 @@ class Customer
 
 end
 ```
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/ruby-objects-has-many-through-readme' title='Ruby Object Relations: Has-Many Through'>Ruby Object Relations: Has-Many Through</a> on Learn.co and start learning to code for free.</p>
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/ruby-objects-has-many-through-readme'>Has Many Objects Through</a> on Learn.co and start learning to code for free.</p>
